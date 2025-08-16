@@ -1,3 +1,4 @@
+#Solution 1
 select 
     ua.id,
     ua.first_name,
@@ -17,5 +18,24 @@ group by
     ua.last_name,
     cu.id,
     cu.customer_name
+having 
+    count(cu.id) > 1
+
+#Solution 2
+select 
+    ua.id,
+    ua.first_name,
+    ua.last_name,
+    cu.id as customer_id,
+    cu.customer_name,
+    count(cu.id) as customer_count
+from 
+    customer as cu
+join 
+    contact as c on cu.id = c.customer_id
+join 
+    user_account as ua on c.user_account_id = ua.id
+group by 
+    c.user_account_id, c.customer_id
 having 
     count(cu.id) > 1
